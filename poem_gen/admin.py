@@ -1,3 +1,4 @@
 from django.contrib import admin
+from poem_gen.models import TextInput
 
-# Register your models here.
+admin.site.register(TextInput)

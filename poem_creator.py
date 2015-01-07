@@ -1,28 +1,36 @@
-#-*- coding: ascii -*-
 import re
 import nltk
 from random import randint
 
-# script, filename, b1, b2 = argv
-# text_dir = os.path.join(os.getcwd(), "texts")
-# fileyellow = "{}/{}".format(text_dir,"yellow.txt")
-# filedickens = "{}/{}".format(text_dir,"DickensTaleofTwo.txt")
+def poem_creator(object1, object2):
+	# print(object1.name, object2.name)
+	# object1.text.open()
+	# object2.text.open()
+	# text1 = object1.text.readlines()
+	# text2 = object2.text.readlines()
+	# print(text1[0:10], text2[0:10])
 
-# filename = 'test.txt'
-# output = open(filename, 'w')
-def maker_of_poem(b1, b2):
 	final_poem = str()
-	first = open(b1).read().strip().replace('\r',' ').replace('\n', ' ')
+	first = str()
+	second = str()
+	object1.text.open()
+	line_list1 = object1.text.readlines()
+	for line in line_list1:
+		first += line
+	first = first.strip().replace('\r',' ').replace('\n', ' ')
 	first = first.split(' ')
 	first = filter(None, first)
-	#first = re.split('\W+', first)
-	#first = [x.split(' ') for x in first.split('\n')]
-
-	second = open(b2).read().strip().replace('\r',' ').replace('\n', ' ')
+	# first = re.split('\W+', first)
+	# first = [x.split(' ') for x in first.split('\n')]
+	object2.text.open()
+	line_list2 = object2.text.readlines()
+	for line in line_list2:
+		second += line
+	second = second.strip().replace('\r',' ').replace('\n', ' ')
 	second = second.split(' ')
 	second = filter(None, second)
-	#second = re.split('\W+', second)
-	#second = [x.split(' ') for x in second.split('\n')]
+	# second = re.split('\W+', second)
+	# second = [x.split(' ') for x in second.split('\n')]
 
 	conj = ['CC', 'IN', 'DT']
 	verbs = ['VBZ', 'VBG', 'VBD', 'VBN', 'VBP']
@@ -99,6 +107,3 @@ def maker_of_poem(b1, b2):
 	final_poem += '\n'
 	# output.write('\n')
 	return final_poem
-
-# print(maker_of_poem(fileyellow,filedickens))
-

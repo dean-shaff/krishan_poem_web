@@ -1,2 +1,7 @@
 <h1>Check it out</h1>
-
+<form>
+{% for book in books%}
+<input type="radio" name={{book.name}} value={{book.name}}>{{book.name}}
+<br />
+{% endfor %}
+</form>
