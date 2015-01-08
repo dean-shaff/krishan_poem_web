@@ -1,1 +1,1 @@
-web: gunicorn poem_maker.wsgi
+web: gunicorn poem_maker.wsgi:application
