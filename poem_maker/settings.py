@@ -53,7 +53,7 @@ ROOT_URLCONF = 'poem_maker.urls'
 
 WSGI_APPLICATION = 'poem_maker.wsgi.application'
 
-
+ALLOWED_HOSTS = ['secure-earth-4051.herokuapp.com'] 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -63,19 +63,24 @@ WSGI_APPLICATION = 'poem_maker.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+# DATABASES = {
+#   'default': {
+#     'NAME':'poemdb',
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     'USER':'dean',
+#     'PASSWORD':'hawkeye',
+#     'HOST':'localhost',
+#     'PORT':'5432',
+#   }
+# }
+import dj_database_url
+
+if not os.environ.has_key('DATABASE_URL'):
+    os.environ['DATABASE_URL'] = 'postgres://dean:hawkeye@localhost/poemdb'
+
 DATABASES = {
-  'default': {
-    'NAME':'poemdb',
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'USER':'dean',
-    'PASSWORD':'hawkeye',
-    'HOST':'localhost',
-    'PORT':'5432',
-  }
-}
-
-
-
+    'default': dj_database_url.config(default=os.environ['DATABASE_URL'])
+    }
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -101,3 +106,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
