@@ -1,1 +1,1 @@
-web: bin/gunicorn poem_maker.wsgi
+web: python manage.py runserver 0.0.0.0:$PORT --noreload
