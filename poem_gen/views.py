@@ -8,7 +8,6 @@ from random import randint
 
 nltk.data.path.append('./nltk_data/')
 
-
 def poem_creator(object1, object2):
 	# print(object1.name, object2.name)
 	# object1.text.open()
@@ -120,9 +119,10 @@ def index(request):
 	context = RequestContext(request)
 
 	list_of_objects = TextInput.objects.all()
-
-	poem = poem_creator(list_of_objects[0], list_of_objects[1])
-
+	try:
+		poem = poem_creator(list_of_objects[0], list_of_objects[1])
+	except IndexError:
+		list_of_objects = []
 	return render_to_response('poem_gen/index.html', {'books':list_of_objects}, context_instance=context)
 
 # Create your views here.
