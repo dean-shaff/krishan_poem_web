@@ -1,1 +1,1 @@
-web: python manage.py run_gunicorn -b "0.0.0.0:$PORT" -w 3shabda
+web: gunicorn poem_maker.wsgi:application
