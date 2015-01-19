@@ -6,6 +6,9 @@ import re
 import nltk
 from random import randint
 
+nltk.data.path.append('./nltk_data/')
+
+
 def poem_creator(object1, object2):
 	# print(object1.name, object2.name)
 	# object1.text.open()
