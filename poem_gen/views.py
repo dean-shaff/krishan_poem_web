@@ -3,6 +3,7 @@ from django.template import RequestContext
 from poem_gen.models import TextInput
 from poem_creator import poem_creator
 
+
 def index(request):
 
 	context = RequestContext(request)
