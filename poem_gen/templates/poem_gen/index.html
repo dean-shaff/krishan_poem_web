@@ -1,4 +1,6 @@
+{% extends 'home.html' %}
 <h1>Krishan's Poem App</h1>
+{% block content %}
 <form>
 {% for book in books%}
 <input type="radio" name={{book.name}} value={{book.name}}>{{book.name}}
@@ -6,3 +8,4 @@
 {% endfor %}
 <h2>{{poem}}</h2>
 </form>
+{% endblock %}

@@ -52,7 +52,7 @@ ROOT_URLCONF = 'poem_maker.urls'
 
 WSGI_APPLICATION = 'poem_maker.wsgi.application'
 
-ALLOWED_HOSTS = ['secure-earth-4051.herokuapp.com'] 
+ALLOWED_HOSTS = ['secure-earth-4051.herokuapp.com', 'krishanpoemapp.herokuapp.com'] 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
