@@ -1,7 +1,8 @@
-<h1>Check it out</h1>
+<h1>Krishan's Poem App</h1>
 <form>
 {% for book in books%}
 <input type="radio" name={{book.name}} value={{book.name}}>{{book.name}}
 <br />
 {% endfor %}
+<h2>{{poem}}</h2>
 </form>

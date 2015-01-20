@@ -123,6 +123,7 @@ def index(request):
 		poem = poem_creator(list_of_objects[0], list_of_objects[1])
 	except IndexError:
 		list_of_objects = []
-	return render_to_response('poem_gen/index.html', {'books':list_of_objects}, context_instance=context)
+		poem = "No poem!"
+	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem}, context_instance=context)
 
 # Create your views here.
