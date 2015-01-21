@@ -133,18 +133,13 @@ def index(request):
 
 	context = RequestContext(request)
 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
-	# print(files_in_text)
 	list_of_objects = TextInput.objects.all()
-	print(isinstance(list_of_objects[0], TextInput))
-	# print(repr(list_of_objects[0].text.path))
-	# print("DickensTaleofTwo.txt".strip(".txt"))
-	# print("DickensTaleofTwo.txt".strip(".txt") in str(list_of_objects[0].text))
 	available_files = []
 	for file_name in files_in_text:
 		for object in list_of_objects:
 			if file_name.strip(".txt") in str(object.text.path):
 				available_files.append(file_name)
-	print(available_files)
+	# print(available_files)
 	try:
 		poem = poem_creator(available_files[0], available_files[1])
 	except (IndexError, IOError) as e:
@@ -153,17 +148,20 @@ def index(request):
 		logging.exception(e)
 		files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 		logging.info(files_in_text)
+	getted = []
 
 	if request.method == "GET":
 		request_dict = dict(request.GET)
-		books = []
 		print(request_dict)
-		for name in request_dict.keys():
-			if name in list_of_objects:
+		for id_num in request_dict.values():
+			if id_num[0] == '':
 				pass
+			elif id_num[0] != '':
+				print
+				getted.append(TextInput.objects.get(id=str(id_num[0])))
 	else:
 		pass
-
+	print(getted)
 	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'files':files_in_text}, context_instance=context)
 
 # Create your views here.

@@ -1,7 +1,7 @@
 {% extends 'home.html' %}
 <h1>Krishan's Poem App</h1>
 {% block content %}
-<form>
+<!-- <form>
 {% for book in books%}
 <form class="form-signin span2 centered" id="like" method="get">
 	<div class = 'row'>
@@ -9,6 +9,26 @@
 	</div>
 {% endfor %}
 	<div class = 'row'>
+		<button class="btn btn-primary" name='submit' type='submit'>Make Poem!</button>
+	</div>
+</form> -->
+<form class="form-signin span2 centered" id="like" method="get">
+	<div class='row'>
+		<select multiple class='form-control' name='book1'>
+		{% for book in books %}
+			<option value={{book.id}}>{{book.name}}</option>
+		{% endfor %}
+		</select>
+	</div>
+	</br >
+	<div class='row'>
+		<select multiple class='form-control' name='book2'>
+		{% for book in books %}
+			<option value={{book.id}}>{{book.name}}</option>
+		{% endfor %}
+		</select>
+	</div>
+	<div class='row'>
 		<button class="btn btn-primary" name='submit' type='submit'>Make Poem!</button>
 	</div>
 </form>
