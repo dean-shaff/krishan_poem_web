@@ -3,7 +3,7 @@
 {% block content %}
 <form>
 {% for book in books%}
-<input type="radio" name={{book.name}} value={{book.name}}>{{book.name}}
+<input type="radio" name={{book.name}} value={{book.name}}>{{book.name}} {{book.text.path}}
 <br />
 {% endfor %}
 <h2>{{poem}}</h2>

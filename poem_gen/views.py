@@ -1,10 +1,14 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from poem_gen.models import TextInput
+from poem_maker import settings
 # from poem_creator import poem_creator
 import re
 import nltk
 from random import randint
+import logging 
+import time 
+import os
 
 nltk.data.path.append('./nltk_data/')
 
@@ -115,15 +119,21 @@ def poem_creator(object1, object2):
 	return final_poem
 
 def index(request):
+	logging.basicConfig(filename = 'views.log', level = logging.INFO)
+	logging.info('Started: {} {}'.format(time.strftime("%H:%M:%S"), time.strftime("%d/%m/%Y")))
 
 	context = RequestContext(request)
 
 	list_of_objects = TextInput.objects.all()
 	try:
 		poem = poem_creator(list_of_objects[0], list_of_objects[1])
-	except IndexError:
+	except (IndexError, IOError) as e:
 		list_of_objects = []
 		poem = "No poem!"
+		logging.exception(e)
+		files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
+		logging.info(files_in_text)
+
 	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem}, context_instance=context)
 
 # Create your views here.
