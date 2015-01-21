@@ -123,7 +123,7 @@ def index(request):
 	logging.info('Started: {} {}'.format(time.strftime("%H:%M:%S"), time.strftime("%d/%m/%Y")))
 
 	context = RequestContext(request)
-
+	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 	list_of_objects = TextInput.objects.all()
 	try:
 		poem = poem_creator(list_of_objects[0], list_of_objects[1])
@@ -134,6 +134,6 @@ def index(request):
 		files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 		logging.info(files_in_text)
 
-	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem}, context_instance=context)
+	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'files':files_in_text}, context_instance=context)
 
 # Create your views here.
