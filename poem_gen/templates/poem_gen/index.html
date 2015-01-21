@@ -3,9 +3,15 @@
 {% block content %}
 <form>
 {% for book in books%}
-<input type="radio" name={{book.name}} value={{book.name}}>{{book.name}} {{book.text.path}}
-<br />
+<form class="form-signin span2 centered" id="like" method="get">
+	<div class = 'row'>
+		<input type="radio" name={{book.id}}>{{book.name}} {{book.text.path}}
+	</div>
 {% endfor %}
+	<div class = 'row'>
+		<button class="btn btn-primary" name='submit' type='submit'>Make Poem!</button>
+	</div>
+</form>
 <h2>{{files}}</h2>
 <h2>{{poem}}</h2>
 </form>
