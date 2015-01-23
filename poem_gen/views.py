@@ -135,11 +135,11 @@ def index(request):
 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 	list_of_objects = TextInput.objects.all()
 
-	available_files = []
-	for file_name in files_in_text:
-		for object in list_of_objects:
-			if file_name.strip(".txt") in str(object.text.path):
-				available_files.append(file_name)
+	# available_files = []
+	# for file_name in files_in_text:
+	# 	for object in list_of_objects:
+	# 		if file_name.strip(".txt") in str(object.text.path):
+	# 			available_files.append(file_name)
 	# print(available_files)
 	# try:
 	# 	poem = poem_creator(available_files[0], available_files[1])
@@ -163,28 +163,18 @@ def index(request):
 					getted.append(TextInput.objects.get(id=str(id_num[0])))
 		else:
 			pass
-		#below I'm accounting for the stupid string formatting that django appends. I'm sure there is a better
-		#way to do this though.	
-		available_files = []
-		for file_name in files_in_text:
-			for object in getted:
-				if file_name.strip(".txt") in str(object.text.path):
-					available_files.append(file_name)
-		print(available_files)
 
-		if len(available_files) >= 2:
-			poem = poem_creator(available_files[0], available_files[1])
-			print(repr(poem))
-		elif len(available_files) < 2:
+		if len(getted) == 2:
+			poem = poem_creator(getted[0], getted[1])
+			# poem = poem1.replace(u'\n','<br />')
+			# poem = cgi.escape(poem)
+		elif len(getted) < 2:
 			poem = "Not enough texts selected to generate a poem. Pick two and try again!"
 
 	except (IOError, IndexError) as err:
 		poem = "Error -- no poem generated"
 		logging.exception(err)
-		available_files = []
 
-
-	print(getted)
-	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'available_files':available_files}, context_instance=context)
+	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'getted':getted}, context_instance=context)
 
 # Create your views here.

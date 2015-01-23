@@ -1,4 +1,5 @@
 myenv
+media
 *.pyc
 *.log
 *.zip
