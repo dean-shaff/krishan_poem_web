@@ -134,34 +134,57 @@ def index(request):
 	context = RequestContext(request)
 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 	list_of_objects = TextInput.objects.all()
+
 	available_files = []
 	for file_name in files_in_text:
 		for object in list_of_objects:
 			if file_name.strip(".txt") in str(object.text.path):
 				available_files.append(file_name)
 	# print(available_files)
-	try:
-		poem = poem_creator(available_files[0], available_files[1])
-	except (IndexError, IOError) as e:
-		list_of_objects = []
-		poem = "No poem!"
-		logging.exception(e)
-		files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
-		logging.info(files_in_text)
+	# try:
+	# 	poem = poem_creator(available_files[0], available_files[1])
+	# except (IndexError, IOError) as e:
+	# 	list_of_objects = []
+	# 	poem = "No poem!"
+	# 	logging.exception(e)
+	# 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
+	# 	logging.info(files_in_text)
 	getted = []
+	poem = str()
+	try:
+		if request.method == "GET":
+			request_dict = dict(request.GET)
+			print(request_dict)
+			for id_num in request_dict.values():
+				if id_num[0] == '':
+					pass
+				elif id_num[0] != '':
+					print
+					getted.append(TextInput.objects.get(id=str(id_num[0])))
+		else:
+			pass
+		#below I'm accounting for the stupid string formatting that django appends. I'm sure there is a better
+		#way to do this though.	
+		available_files = []
+		for file_name in files_in_text:
+			for object in getted:
+				if file_name.strip(".txt") in str(object.text.path):
+					available_files.append(file_name)
+		print(available_files)
 
-	if request.method == "GET":
-		request_dict = dict(request.GET)
-		print(request_dict)
-		for id_num in request_dict.values():
-			if id_num[0] == '':
-				pass
-			elif id_num[0] != '':
-				print
-				getted.append(TextInput.objects.get(id=str(id_num[0])))
-	else:
-		pass
+		if len(available_files) >= 2:
+			poem = poem_creator(available_files[0], available_files[1])
+			print(repr(poem))
+		elif len(available_files) < 2:
+			poem = "Not enough texts selected to generate a poem. Pick two and try again!"
+
+	except (IOError, IndexError) as err:
+		poem = "Error -- no poem generated"
+		logging.exception(err)
+		available_files = []
+
+
 	print(getted)
-	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'files':files_in_text}, context_instance=context)
+	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'available_files':available_files}, context_instance=context)
 
 # Create your views here.
