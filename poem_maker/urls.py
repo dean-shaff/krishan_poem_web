@@ -3,11 +3,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'poem_maker.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    # url(r'^$', 'poem_maker.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', include('poem_gen.urls', namespace = 'poem_gen'))
+    url(r'^', include('poem_gen.urls'))
 )
 urlpatterns += staticfiles_urlpatterns()

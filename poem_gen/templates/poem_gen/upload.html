@@ -1,0 +1,15 @@
+{% extends 'home.html' %}
+<h1>Krishan's Poem App</h1>
+{% block content %}
+
+<form class="form-signin span2 centered" id="upload" method="get">
+	Username: <input type="text" class="btn-block form-control" placeholder="Book title" name="title" value="" size="50" />
+	<br />
+	Password: <input type="text" class="btn-block form-control" placeholder="Author" name="author" value="" size="50" />
+	<br />
+	<div class='row'>
+		<button class='btn btn-primary' name='submit' type='submit'>Submit</button>
+	</div>
+</form>
+
+{% endblock %}

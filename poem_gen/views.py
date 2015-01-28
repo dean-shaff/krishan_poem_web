@@ -177,4 +177,8 @@ def index(request):
 
 	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'getted':getted}, context_instance=context)
 
-# Create your views here.
+def upload_book(request):
+	context = RequestContext(request)
+	return render_to_response('poem_gen/upload.html', {}, context_instance=context)
+
+	# return HttpResponseRedirect('/upload/')
