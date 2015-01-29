@@ -148,6 +148,7 @@ def index(request):
 	logging.info('Started: {} {}'.format(time.strftime("%H:%M:%S"), time.strftime("%d/%m/%Y")))
 
 	context = RequestContext(request)
+	
 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 	list_of_objects = TextInput.objects.all()
 
