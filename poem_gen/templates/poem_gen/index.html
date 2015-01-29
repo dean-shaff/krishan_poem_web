@@ -12,7 +12,8 @@
 		<button class="btn btn-primary" name='submit' type='submit'>Make Poem!</button>
 	</div>
 </form> -->
-<form class="form-signin span2 centered" id="like" method="get">
+<div class='centerfy'>
+<form class="form-signin span4 centered" id="like" method="get">
 	<div class='row'>
 		<select multiple class='form-control' name='book1'>
 		{% for book in books %}
@@ -28,13 +29,19 @@
 		{% endfor %}
 		</select>
 	</div>
+	<br>
 	<div class='row'>
-		<button class="btn btn-primary" name='submit' type='submit'>Make Poem!</button>
+		<button class="btn btn-primary span3 centered" name='submit' type='submit'>Make Poem!</button>
 	</div>
 </form>
+</div>
 <!-- <h2>{{files}}</h2> -->
 <h2>{{poem|linebreaks}}</h2>
-<a class="btn btn-default" href="upload_book" role="button">Upload Book</a>	
+<br>
+<!-- <div class='row'> -->
+<div class='centerfy'>
+<a class="btn btn-primary span3 centered" href="upload_book" role="button">Upload Book</a>	
+</div>
+
 <!-- <h2>testing<br />my name is dean</h2> -->
-</form>
 {% endblock %}

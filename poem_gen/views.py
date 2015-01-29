@@ -2,6 +2,10 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from poem_gen.models import TextInput
 from poem_maker import settings
+from poem_gen.forms import PoemGenUploadForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.files import File
+
 # from poem_creator import poem_creator
 import re
 import nltk
@@ -12,6 +16,18 @@ import os
 
 nltk.data.path.append('./nltk_data/')
 text_dir = os.path.join(settings.MEDIA_ROOT,'texts')
+# text_dir = 'texts'
+
+# books = {"Heart of Darkness by Joseph Conrad":fileconrad,
+#         "The Metamorphosis by Frank Kafka":filekafka,
+#         "A Collection of Chinese Fairy Tales":filechina,
+#         "A Collection of Persian Fairy Tales":filefairy,
+#         "The Yellow Wallpaper by Charlotte Gilman Perkins":fileyellow,
+#         "A Manual about the History of Steam Power":filesteam,
+#         "Dead Men Tell No Takes by E. W. Hornung": filedeadmen,
+#         "A Treatise of the History of Glass by Edward Dillon":fileglass,
+#         "A Take of Two Cities by Charles Dickens":filedickens,
+#         "A Critique of Pure Reason by Immanuel Kant":filekant }
 
 def poem_creator(object1, object2):
 	# print(object1.name, object2.name)
@@ -178,7 +194,46 @@ def index(request):
 	return render_to_response('poem_gen/index.html', {'books':list_of_objects, 'poem':poem, 'getted':getted}, context_instance=context)
 
 def upload_book(request):
+	logging.basicConfig(filename = 'views.log', level = logging.INFO)
+	logging.info('Started: {} {}'.format(time.strftime("%H:%M:%S"), time.strftime("%d/%m/%Y")))
 	context = RequestContext(request)
+
+	try: 
+		if request.method == "POST":
+			# below is how i would do this with the django form. Have this set up, just don't want to use it.
+			# print(request.FILES)
+			# book_form = PoemGenUploadForm(request.POST, request.FILES)
+
+			# if book_form.is_valid():
+			# 	book_form.save()
+			# else:
+			# 	logging.info(book_form.errors)
+				# print(book_form.errors)
+
+			request_dict = dict(request.POST)
+			file_dict = dict(request.FILES)
+			try:
+				title = request_dict['title'][0]
+				author = request_dict['author'][0]
+				text_file = file_dict['file_to_upload'][0]
+				with open(os.path.join(text_dir, text_file.name),'w') as writer:
+					for chunk in text_file.chunks():
+						writer.write(chunk)
+
+				new_book = TextInput()
+				new_book.name = str(title)
+				new_book.author = str(author)
+				new_book.text = os.path.join(text_dir, text_file.name)
+				new_book.save()
+				return HttpResponseRedirect('/')
+			except (KeyError, IOError) as err1:
+				print(err1)
+				logging.exception(err1)
+
+			
+	except (IOError, IndexError) as err:
+		logging.exception(err)
+
 	return render_to_response('poem_gen/upload.html', {}, context_instance=context)
 
 	# return HttpResponseRedirect('/upload/')
