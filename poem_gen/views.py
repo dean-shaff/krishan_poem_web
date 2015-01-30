@@ -148,7 +148,7 @@ def index(request):
 	logging.info('Started: {} {}'.format(time.strftime("%H:%M:%S"), time.strftime("%d/%m/%Y")))
 
 	context = RequestContext(request)
-	
+
 	files_in_text = os.listdir("{}/{}".format(settings.MEDIA_ROOT,"texts"))
 	list_of_objects = TextInput.objects.all()
 
@@ -171,22 +171,25 @@ def index(request):
 	try:
 		if request.method == "GET":
 			request_dict = dict(request.GET)
-			print(request_dict)
-			for id_num in request_dict.values():
-				if id_num[0] == '':
-					pass
-				elif id_num[0] != '':
-					print
-					getted.append(TextInput.objects.get(id=str(id_num[0])))
+			# print(request_dict)
+			if 'clear' in request_dict.keys():
+				pass 
+			elif 'submit' in request_dict.keys():	
+				for id_num in request_dict.values():
+					if id_num[0] == '':
+						pass
+					elif id_num[0] != '':
+						print
+						getted.append(TextInput.objects.get(id=str(id_num[0])))
+				if len(getted) == 2:
+					poem = poem_creator(getted[0], getted[1])
+					# poem = poem1.replace(u'\n','<br />')
+					# poem = cgi.escape(poem)
+				elif len(getted) < 2:
+					poem = "Not enough texts selected to generate a poem. Pick two and try again!"
+
 		else:
 			pass
-
-		if len(getted) == 2:
-			poem = poem_creator(getted[0], getted[1])
-			# poem = poem1.replace(u'\n','<br />')
-			# poem = cgi.escape(poem)
-		elif len(getted) < 2:
-			poem = "Not enough texts selected to generate a poem. Pick two and try again!"
 
 	except (IOError, IndexError) as err:
 		poem = "Error -- no poem generated"
